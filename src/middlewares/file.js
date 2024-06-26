@@ -2,14 +2,17 @@ const multer = require("multer")
 const cloudinary = require("cloudinary").v2
 const { CloudinaryStorage } = require("multer-storage-cloudinary")
 
-const storage = new CloudinaryStorage({
+const Storage = (folder) => {
+ return new CloudinaryStorage({
     cloudinary: cloudinary,
     params: {
-        folder: "videojuegos",
+        folder: folder,
         allowedFormats: ["jpg", "png", "jpeg", "gif"]
     }
 })
+}
 
-const upload = multer({storage})
+const uploadVideogames = multer({ storage: Storage("videojuegos") })
+const uploadPlatforms = multer({ storage: Storage("plataformas") })
 
-module.exports = upload
+module.exports = { uploadVideogames, uploadPlatforms }
